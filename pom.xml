@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>yangyongfeng</groupId>
+  <artifactId>tiger</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <name>tiger</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <!-- slf4j核心包--> 
+    <dependency>
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-api</artifactId>
+         <version>1.7.28</version>
+      </dependency>
+      
+     <!--核心log4j2jar包-->  
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-api</artifactId>
+        <version>2.13.0</version>
+    </dependency>
+    
+     <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-core</artifactId>
+         <version>2.13.0</version>
+    </dependency>
+    
+    <dependency> 
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+         <version>1.7.28</version>
+    </dependency>
+    
+      <dependency>
+        <groupId>zhkh</groupId>
+        <artifactId>RXTX</artifactId>
+        <version>2.2</version>
+    </dependency>
+    
+    <dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>fastjson</artifactId>
+    <version>1.2.61</version>
+	</dependency>
+
+  </dependencies>
+</project>
