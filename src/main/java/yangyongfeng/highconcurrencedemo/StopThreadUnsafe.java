@@ -49,10 +49,14 @@ public class StopThreadUnsafe {
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
-						//logger.debug(e.getMessage(),e);
-						e.printStackTrace();
+						logger.debug("ChangeObject thread is interrupted.");
+						Thread.currentThread().interrupt();//重新置位中断标志位
 					}
 					user.setName(String.valueOf(v));
+				}
+				if (Thread.currentThread().isInterrupted()) { //线程终止
+					logger.debug("ChangeObject thread is terminate.");
+					break;
 				}
 				Thread.yield();
 			}
@@ -63,6 +67,9 @@ public class StopThreadUnsafe {
 		@Override
 		public void run() {
 			while(true) {
+				if (Thread.currentThread().isInterrupted()) {
+					logger.debug("Read Thread is terminate.");
+				}
 				synchronized(user) {
 					if (user.getId() != Integer.parseInt(user.getName())) {
 						logger.debug(user.toString());
@@ -76,12 +83,17 @@ public class StopThreadUnsafe {
 	
 	
 	public static void main(String[] args) throws InterruptedException{
-		new ReadObjectThread().start();    //启动读线程
-		while(true) {
-			Thread t = new ChangeObjectThread();
-			t.start();
-			Thread.sleep(150);
-			t.stop();
+		Thread readThread =  new ReadObjectThread();    //启动读线程
+		Thread changeThread = new ChangeObjectThread();
+		
+		readThread.start();
+		changeThread.start();
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO: handle exception
 		}
+		logger.debug("Main thread is terminated.");
 	}
 }
