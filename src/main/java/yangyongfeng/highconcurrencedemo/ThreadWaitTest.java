@@ -5,7 +5,8 @@ import org.slf4j.LoggerFactory;
 
 public class ThreadWaitTest {
 	public static final Logger logger = LoggerFactory.getLogger(ThreadWaitTest.class);
-
+	public static Object syncObject = new Object();
+	
 	public static void main(String[] args) {
 		Thread t1 = new Thread(new ThreadWaitRunnable());
 		Thread t2 = new Thread(new ThreadNotifyRunnalbe());
@@ -17,13 +18,13 @@ public class ThreadWaitTest {
 	public static class ThreadWaitRunnable implements Runnable {
 
 		public void run() {
-			synchronized (this) {
+			synchronized (syncObject) {
 				logger.debug(System.currentTimeMillis() + ": " + "Thread(" + Thread.currentThread().getId() + ") "
 						+ "start.");
 				try {
 					logger.debug(System.currentTimeMillis() + ": " + "Thread(" + Thread.currentThread().getId() + ") "
 							+ "is waiting.");
-					this.wait();
+					syncObject.wait();
 
 				} catch (InterruptedException e) {
 					logger.debug(System.currentTimeMillis() + ": " + "Thread(" + Thread.currentThread().getId() + ")"
@@ -40,11 +41,11 @@ public class ThreadWaitTest {
 
 		public void run() {
 
-			synchronized (this) {
+			synchronized (syncObject) {
 
 				logger.debug(System.currentTimeMillis() + ": " + "Thread:(" + Thread.currentThread().getId() + ")"
 						+ "start and notify one thread.");
-				this.notify();
+				syncObject.notify();
 				logger.debug(
 						System.currentTimeMillis() + ": " + "Thread(" + Thread.currentThread().getId() + ")" + "end.");
 				try {
