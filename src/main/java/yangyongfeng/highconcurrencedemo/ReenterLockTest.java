@@ -9,6 +9,7 @@ public class ReenterLockTest {
 		
 		Thread t1 = new Thread (new AccountThread());
 		Thread t2 = new Thread (new AccountThread());
+		
 		t1.start();
 		t2.start();
 		try {
@@ -26,6 +27,7 @@ public class ReenterLockTest {
 		@Override
 		public void run() {
 			lock.lock();
+			
 			try {
 				for (int j = 0; j < 1000000; j++) {
 					sum++;
