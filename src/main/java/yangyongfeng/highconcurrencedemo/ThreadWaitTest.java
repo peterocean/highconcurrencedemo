@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ThreadWaitTest {
-	public static final Logger logger = LoggerFactory.getLogger(ThreadWaitTest.class);
 	public static Object syncObject = new Object();
 	
 	public static void main(String[] args) {
@@ -18,20 +17,16 @@ public class ThreadWaitTest {
 	public static class ThreadWaitRunnable implements Runnable {
 
 		public void run() {
-			synchronized (syncObject) {
-				logger.debug(System.currentTimeMillis() + ": " + "Thread(" + Thread.currentThread().getId() + ") "
-						+ "start.");
+			synchronized (syncObject) {		//线程等待前需获得对象锁
+				System.out.println(System.currentTimeMillis() + Thread.currentThread().getName() + " start.");
 				try {
-					logger.debug(System.currentTimeMillis() + ": " + "Thread(" + Thread.currentThread().getId() + ") "
-							+ "is waiting.");
+					System.out.println(System.currentTimeMillis() + Thread.currentThread().getName() + " wait and blocked");
 					syncObject.wait();
 
 				} catch (InterruptedException e) {
-					logger.debug(System.currentTimeMillis() + ": " + "Thread(" + Thread.currentThread().getId() + ")"
-							+ "is interrupted.");
+					System.out.println(System.currentTimeMillis() + Thread.currentThread().getName() + " is interrupted.");
 				}
-				logger.debug(
-						System.currentTimeMillis() + ": " + "Thread(" + Thread.currentThread().getId() + ")" + " end.");
+				System.out.println(System.currentTimeMillis() + Thread.currentThread().getName() + " end.");
 			}
 		}
 
@@ -41,19 +36,17 @@ public class ThreadWaitTest {
 
 		public void run() {
 
-			synchronized (syncObject) {
-
-				logger.debug(System.currentTimeMillis() + ": " + "Thread:(" + Thread.currentThread().getId() + ")"
-						+ "start and notify one thread.");
+			synchronized (syncObject) { //线程notify()需获得对象同步锁，且需与被唤醒的线程使用同一对象
+				System.out.println(System.currentTimeMillis() + Thread.currentThread().getName() + " start and notify one thread.");
 				syncObject.notify();
-				logger.debug(
-						System.currentTimeMillis() + ": " + "Thread(" + Thread.currentThread().getId() + ")" + "end.");
-				try {
-					Thread.sleep(2000);
-				} catch (Exception e) {
-
-				}
+				
 			}
+			try {
+				Thread.sleep(1000);
+			} catch (Exception e) {
+
+			}
+			System.out.println(System.currentTimeMillis() + Thread.currentThread().getName() + " end.");
 		}
 
 	}
